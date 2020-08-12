@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='fefu_admission',
-    version='1.4',
+    version='1.5',
     packages=find_packages(),
     long_description_content_type="text/markdown",
     long_description=open(join(dirname(__file__), 'README.md')).read(),
@@ -13,11 +13,14 @@ setup(
             ['fefu_admission = fefu_admission.cli:cli']
     },
     install_requires=[
-        "click~=7.1.2",
-        "requests~=2.24.0",
-        "beautifulsoup4~=4.9.1",
-        "colorama~=0.4.3",
-        "tabulate~=0.8.7",
-        "setuptools~=49.2.0",
+        "certifi==2020.6.20"
+        "chardet==3.0.4"
+        "click==7.1.2"
+        "colorama==0.4.3"
+        "idna==2.10"
+        "lxml==4.5.2"
+        "requests==2.24.0"
+        "tabulate==0.8.7"
+        "urllib3==1.25.10"
     ],
 )
