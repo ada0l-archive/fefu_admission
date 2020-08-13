@@ -1,7 +1,7 @@
 from fefu_admission.university.type_of_completion import TypeOfCompletion
-from fefu_admission.university.applicants_holder_base import ApplicantsHolderBase
-from fefu_admission.university.department_load_from_web_thread import DepartmentLoadFromWebThread
-from fefu_admission.university.university_serialization import UniversitySerialization
+from fefu_admission.university.applicants_holder import ApplicantsHolderBase
+from fefu_admission.university.department import DepartmentWebLoaderThread
+from .serialization import UniversitySerialization
 
 import logging
 
@@ -20,7 +20,7 @@ class University(ApplicantsHolderBase):
         thread_list = []
 
         for department in self.departments:
-            thread_list.append(DepartmentLoadFromWebThread(department))
+            thread_list.append(DepartmentWebLoaderThread(department))
 
         for thread in thread_list:
             thread.start()

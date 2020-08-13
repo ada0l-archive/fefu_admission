@@ -1,7 +1,7 @@
 import json
 import os
 
-from fefu_admission.university.enrollee import Enrollee
+from .enrollee import Enrollee
 
 
 class Settings:

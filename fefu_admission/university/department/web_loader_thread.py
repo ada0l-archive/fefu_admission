@@ -3,7 +3,7 @@ from threading import Thread
 from fefu_admission.university.department import Department
 
 
-class DepartmentLoadFromWebThread(Thread):
+class DepartmentWebLoaderThread(Thread):
     """
     To asynchronously download data from the web
     """

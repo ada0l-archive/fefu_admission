@@ -3,11 +3,11 @@ from datetime import datetime
 
 import click
 
-from fefu_admission.fefu_university.fefu_university import Fefu
-from fefu_admission.university.university_information_printer import \
+from fefu_admission.fefu.university import FefuUniversity
+from fefu_admission.university.university.printer import \
     UniversityInformationPrinter
 
-fefu = Fefu()
+fefu = FefuUniversity()
 
 logging.basicConfig(level=logging.INFO)
 

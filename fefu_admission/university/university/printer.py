@@ -1,4 +1,4 @@
-from fefu_admission.university.applicants_holder_information_printer import ApplicantsHolderInformationPrinter
+from fefu_admission.university.applicants_holder import ApplicantsHolderInformationPrinter
 from fefu_admission.university.type_of_completion import TypeOfCompletion
 
 from colorama import Back, Fore, Style
