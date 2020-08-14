@@ -6,7 +6,8 @@ A command-line application for monitoring the competitive situation of admission
 ## Installing
  1. Install [python 3](https://www.python.org/)
  2. Open ```cmd.exe``` in Windows or ```terminal``` in Linux/MacOS and write: ```pip install fefu_admission --user```
- 3. (optional) Create create a file ```~/.fefu_admission/settings.json```. Sample content:
+ 3. (optional) Create a file ```~/.fefu_admission/settings.json```. If you don't create a file, the 
+ file will be created automatically. Sample content:
     ```json
     {
         "me": {
@@ -27,14 +28,15 @@ A command-line application for monitoring the competitive situation of admission
 
 ```
 Usage: fefu_admission [OPTIONS] COMMAND [ARGS]...
-   
-   Options:
-     --help  Show this message and exit.
-   
-   Commands:
-     load                    Load data from website and save to...
-     show_list               Show list of any department
-     show_total_information  Get statistics of the competitive situation
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  list   Show list of any department
+  load   Load data from website and save to ~/.fefu_admission/data/
+  stats  Get statistics of the competitive situation
+
 ```
 
 ## Classes
