@@ -1,11 +1,11 @@
+import datetime
+import json
+import logging
+import os
+from shutil import copyfile
+
 from fefu_admission.university.enrollee import Enrollee
 from fefu_admission.university.type_of_completion import TypeOfCompletion
-
-import json
-import os
-import logging
-from shutil import copyfile
-import datetime
 
 
 class DepartmentSerialization:

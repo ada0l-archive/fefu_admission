@@ -1,13 +1,13 @@
-from fefu_admission.university.department import Department
-from fefu_admission.university.university import University
-from fefu_admission.university.type_of_completion import TypeOfCompletion
-from fefu_admission.university.enrollee import Enrollee
-
+import logging
 import time
 
 import requests
-import logging
 from lxml import html
+
+from fefu_admission.university.department import Department
+from fefu_admission.university.enrollee import Enrollee
+from fefu_admission.university.type_of_completion import TypeOfCompletion
+from fefu_admission.university.university import University
 
 
 class FefuDepartment(Department):

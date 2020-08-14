@@ -1,9 +1,10 @@
-from fefu_admission.university.type_of_completion import TypeOfCompletion
+import logging
+
 from fefu_admission.university.applicants_holder import ApplicantsHolderBase
 from fefu_admission.university.department import DepartmentWebLoaderThread
-from .serialization import UniversitySerialization
+from fefu_admission.university.type_of_completion import TypeOfCompletion
 
-import logging
+from .serialization import UniversitySerialization
 
 
 class University(ApplicantsHolderBase):

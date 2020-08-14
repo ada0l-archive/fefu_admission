@@ -1,7 +1,8 @@
 import os
 
-from fefu_admission.university.university.university import University
 from fefu_admission.university.settings import Settings
+from fefu_admission.university.university.university import University
+
 from .department import FefuDepartment
 
 

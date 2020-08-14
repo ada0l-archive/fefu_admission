@@ -1,6 +1,6 @@
-from fefu_admission.university.type_of_completion import TypeOfCompletion
-
 from tabulate import tabulate
+
+from fefu_admission.university.type_of_completion import TypeOfCompletion
 
 
 class ApplicantsHolderInformationPrinter:

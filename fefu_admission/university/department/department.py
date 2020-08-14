@@ -1,11 +1,11 @@
+from typing import Dict, List
+
 from fefu_admission.university.applicants_holder import ApplicantsHolderBase
 from fefu_admission.university.enrollee import Enrollee
 from fefu_admission.university.settings import Settings
 from fefu_admission.university.type_of_completion import TypeOfCompletion
+
 from .serialization import DepartmentSerialization
-
-
-from typing import Dict, List
 
 
 class Department(ApplicantsHolderBase):
