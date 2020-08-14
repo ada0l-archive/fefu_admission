@@ -49,18 +49,17 @@ class FefuDepartment(Department):
 
     def load_from_web(self):
         load_flag = False
-        page = None
+        tbody = None
         while load_flag is not True:
             try:
                 page = html.fromstring(self.get_html_table())
+                table = page.get_element_by_id("abitur")
+                tbody = table.find("tbody")
                 load_flag = True
-            except AttributeError:
-                logging.info("{}: The data is processed on the site, so the table is not currently available.\
-                I will try to load data in 5 seconds. To stop the program press Ctrl-C".format(self.name))
+            except KeyError:
+                logging.info("{}: The data is processed on the site, so the table is not currently available. I will "
+                             "try to load data in 5 seconds. To stop the program press Ctrl-C".format(self.name))
                 time.sleep(5)
-
-        table = page.get_element_by_id("abitur")
-        tbody = table.find("tbody")
 
         type_of_competition = TypeOfCompletion.SpecialQuota
         for element in tbody:
