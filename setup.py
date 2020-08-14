@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='fefu_admission',
-    version='1.6',
+    version='1.7',
     packages=find_packages(),
     long_description_content_type="text/markdown",
     long_description=open(join(dirname(__file__), 'README.md')).read(),
