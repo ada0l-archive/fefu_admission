@@ -24,9 +24,9 @@ def load():
     fefu.serialization.save_data_to_file_all()
 
 
-@cli.command("show_total_information", help="Get statistics of the competitive situation")
+@cli.command("stats", help="Get statistics of the competitive situation")
 @click.option('--date', default=None, required=False)
-def show_total_information(date):
+def show_stats(date):
     global fefu
     if date is not None:
         date_list = [int(item) for item in date.split('.')]
@@ -38,7 +38,7 @@ def show_total_information(date):
     UniversityInformationPrinter(fefu).print_info()
 
 
-@cli.command("show_list", help="Show list of any department")
+@cli.command("list", help="Show list of any department")
 @click.option('--index', default=0, prompt='Index of department', help='Index of department')
 @click.option('--agreement', is_flag=True)
 @click.option('--date', default=None, required=False)
