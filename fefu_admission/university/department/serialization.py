@@ -3,6 +3,7 @@ from fefu_admission.university.type_of_completion import TypeOfCompletion
 
 import json
 import os
+import logging
 from shutil import copyfile
 import datetime
 
@@ -17,16 +18,21 @@ class DepartmentSerialization:
         Parse local files by adding applicants to the lists. Call this method only if local files exist
         :return: None
         """
-        with open(self.get_path_to_data_file(d), "r") as file_json:
-            data_from_jsom = json.load(file_json)
-            for type_of_completion_json in data_from_jsom["type_of_completion"]:
-                type_of_completion = TypeOfCompletion.get_through_value(type_of_completion_json["name"])
-                self.department.places[type_of_completion] = type_of_completion_json["places"]
-                for enrollee_json in type_of_completion_json["list"]:
-                    enrollee = Enrollee.get_from_json(enrollee_json)
-                    self.department.applicants[type_of_completion].append(enrollee)
-                    if enrollee.agreement:
-                        self.department.applicants_with_agreement[type_of_completion].append(enrollee)
+        try:
+            with open(self.get_path_to_data_file(d), "r") as file_json:
+                data_from_jsom = json.load(file_json)
+                for type_of_completion_json in data_from_jsom["type_of_completion"]:
+                    type_of_completion = TypeOfCompletion.get_through_value(type_of_completion_json["name"])
+                    self.department.places[type_of_completion] = type_of_completion_json["places"]
+                    for enrollee_json in type_of_completion_json["list"]:
+                        enrollee = Enrollee.get_from_json(enrollee_json)
+                        self.department.applicants[type_of_completion].append(enrollee)
+                        if enrollee.agreement:
+                            self.department.applicants_with_agreement[type_of_completion].append(enrollee)
+        except FileNotFoundError:
+            logging.info("File not founded: {}".format(self.get_path_to_data_file(d)))
+            logging.info("First you need to run the program with the load command")
+            exit(1)
 
     def save_data_to_file(self):
         applicants_for_save = {"name": self.department.name, "type_of_completion": []}
