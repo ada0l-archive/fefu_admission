@@ -25,9 +25,10 @@ class UniversityInformationPrinter(ApplicantsHolderInformationPrinter):
 
             for index_of_enrollee, enrollee in enumerate(list_applicants):
                 me = self.applicants_holder.settings.me
-                if me is not None:
-                    if me < enrollee:
-                        break
+                if type_of_completion == TypeOfCompletion.Budget:
+                    if me is not None:
+                        if me < enrollee:
+                            break
                 applied_for_another_dep = None
                 another_dep = None
                 for index_of_department, item in enumerate(self.applicants_holder.departments):
