@@ -17,6 +17,7 @@ class UniversityInformationPrinter(ApplicantsHolderInformationPrinter):
         for type_of_completion in [TypeOfCompletion.SpecialQuota,
                                    TypeOfCompletion.TargetQuota,
                                    TypeOfCompletion.Budget]:
+            rows_list.append([type_of_completion.value])
             if with_agreement:
                 list_applicants = dep.applicants_with_agreement[type_of_completion]
             else:
