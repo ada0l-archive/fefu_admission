@@ -9,9 +9,9 @@ class Settings:
     def __init__(self, university, data_path="", default_settings_content=None):
         self.data_path = data_path
         if default_settings_content is not None:
-            self.settings_content = default_settings_content
+            self.default_settings_content = default_settings_content
         else:
-            self.settings_content = {
+            self.default_settings_content = {
                 "me": None,
                 "list_of_departments": []
             }
@@ -33,10 +33,10 @@ class Settings:
             self.get()
 
     def get_data_path(self):
-        return self.university.data_path
+        return self.data_path
 
     def create_default_settings(self):
         if not os.path.exists(self.university.data_path):
             os.makedirs(self.university.data_path)
         with open(self.settings_file, 'w') as settings_file:
-            json.dump(self.settings_content, settings_file)
+            json.dump(self.default_settings_content, settings_file)

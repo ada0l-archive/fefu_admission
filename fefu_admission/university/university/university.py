@@ -13,7 +13,6 @@ class University(ApplicantsHolderBase):
         super().__init__()
         self.name = ""
         self.departments = []
-        self.data_path = ""
         self.serialization = UniversitySerialization(self)
         self.settings = settings
 
