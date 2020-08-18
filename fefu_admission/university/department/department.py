@@ -2,7 +2,6 @@ from typing import Dict, List
 
 from fefu_admission.university.applicants_holder import ApplicantsHolderBase
 from fefu_admission.university.enrollee import Enrollee
-from fefu_admission.university.settings import Settings
 from fefu_admission.university.type_of_completion import TypeOfCompletion
 
 from .serialization import DepartmentSerialization
@@ -16,7 +15,7 @@ class Department(ApplicantsHolderBase):
         self.name = n
         self.serialization = DepartmentSerialization(self)
         self.university = university
-        self.settings: Settings = university.settings
+        self.settings = university.settings
 
     def get_html_table(self):
         """

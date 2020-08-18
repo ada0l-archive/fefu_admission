@@ -9,13 +9,13 @@ from .serialization import UniversitySerialization
 
 class University(ApplicantsHolderBase):
 
-    def __init__(self):
+    def __init__(self, settings=None):
         super().__init__()
         self.name = ""
         self.departments = []
         self.data_path = ""
         self.serialization = UniversitySerialization(self)
-        self.settings = None
+        self.settings = settings
 
     def load_from_web_all(self):
         thread_list = []

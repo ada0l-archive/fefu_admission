@@ -1,6 +1,3 @@
-import os
-
-from fefu_admission.university.settings import Settings
 from fefu_admission.university.university.university import University
 
 from .department import FefuDepartment
@@ -8,11 +5,10 @@ from .department import FefuDepartment
 
 class FefuUniversity(University):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, settings):
+        super().__init__(settings=settings)
         self.name = "ДВФУ"
         self.departments = []
-        self.data_path = os.path.join(os.path.expanduser('~'), ".fefu_admission")
-        self.settings = Settings(self)
+        self.settings = settings(self)
         for department in self.settings.list_of_departments:
             self.departments.append(FefuDepartment(department, self))
