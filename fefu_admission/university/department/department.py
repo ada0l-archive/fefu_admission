@@ -1,14 +1,9 @@
-from typing import Dict, List
-
 from fefu_admission.university.applicants_holder import ApplicantsHolderBase
-from fefu_admission.university.enrollee import Enrollee
-from fefu_admission.university.type_of_completion import TypeOfCompletion
 
 from .serialization import DepartmentSerialization
 
 
 class Department(ApplicantsHolderBase):
-    applicants: Dict[TypeOfCompletion, List[Enrollee]]
 
     def __init__(self, n: str, university):
         super().__init__()
