@@ -19,8 +19,12 @@ class Settings:
         self.settings_file = os.path.join(self.data_path, "settings.json")
 
         data = self.get()
-        self.me: Enrollee = Enrollee.get_from_json(data["me"])
-        self.list_of_departments = data["list_of_departments"]
+        if data is not None:
+            self.me: Enrollee = Enrollee.get_from_json(data.get("me", None))
+            self.list_of_departments = data["list_of_departments"]
+        else:
+            self.me = None
+            self.list_of_departments = []
 
     def get(self):
         try:
@@ -35,8 +39,44 @@ class Settings:
     def get_data_path(self):
         return self.data_path
 
-    def create_default_settings(self):
-        if not os.path.exists(self.university.data_path):
-            os.makedirs(self.university.data_path)
+    def __create_settings(self, settings_content):
+        if not os.path.exists(self.data_path):
+            os.makedirs(self.data_path)
         with open(self.settings_file, 'w') as settings_file:
-            json.dump(self.default_settings_content, settings_file)
+            json.dump(settings_content, settings_file)
+
+    def create_default_settings(self):
+        self.__create_settings(self.default_settings_content)
+
+    def get_list_of_all_departments(self):
+        return []
+
+    def get_generated_settings(self):
+        selected_departments_str = []
+        print("Do you want to add this direction?")
+        for department_str in self.get_list_of_all_departments():
+            answer = input("{}: [y/n]".format(department_str))
+            if answer == "y":
+                selected_departments_str.append(department_str)
+            else:
+                pass
+        me = None
+        if input("do you want to know your place on the list? [y/n]") == "y":
+            name = input("Enter name: ")
+            points = [int(x) for x in input("Enter your points: ").split(" ")]
+            me = Enrollee(name, points, True)
+        settings = {
+            "list_of_departments": selected_departments_str
+        }
+        if me is not None:
+            settings["me"] = {
+                "name": me.name,
+                "points": me.points,
+                "agreement": me.agreement
+            }
+        else:
+            settings["me"] = None
+        return settings
+
+    def generate_and_save_settings(self):
+        self.__create_settings(self.get_generated_settings())

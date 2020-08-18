@@ -26,6 +26,11 @@ def load():
     fefu.serialization.save_data_to_file_all()
 
 
+@cli.command("generate", help="Generate settings")
+def generate_settings():
+    fefu.settings.generate_and_save_settings()
+
+
 @cli.command("stats", help="Get statistics of the competitive situation")
 @click.option('--date', default=None, required=False)
 def show_stats(date):
