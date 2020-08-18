@@ -6,7 +6,7 @@ class Enrollee:
         self.agreement = agreement
 
     def get_points_sum(self):
-        return sum([int(x) for x in self.points])
+        return sum([x for x in self.points])
 
     @staticmethod
     def get_from_json(enrolle_json):
