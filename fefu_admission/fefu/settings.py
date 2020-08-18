@@ -1,14 +1,12 @@
 import os
-import logging
 
 from fefu_admission.university import Settings
+from fefu_admission.utils import Utils
 
-import requests
 from lxml import html
 
 
 class FefuSettings(Settings):
-
     URL_TABLE = "https://www.dvfu.ru/admission/spd/"
 
     def __init__(self, university):
@@ -25,29 +23,16 @@ class FefuSettings(Settings):
                          })
 
     def __get_html_with_departments_list(self):
-        headers = {
-            "accept": "text/html,application/xhtml+xml,application/xml",
-            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
-            (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"
-        }
-
-        response = requests.get(self.URL_TABLE, headers=headers, verify=True)
-        logging.info("Status code: " + str(response.status_code))
-
-        headers["cookie"] = '; '.join([x.name + '=' + x.value for x in response.cookies])
-        headers["content-type"] = 'application/x-www-form-urlencoded'
-        payload = {
-            "PROPERTY_1647": "Прием на обучение на бакалавриат/специалитет",
-            "PROPERTY_1677": "Бюджетная основа",
-            "PROPERTY_1648": "Очная",
-            "PROPERTY_1652": "Владивосток",
-            "PROPERTY_1642": self.default_settings_content["list_of_departments"][0]
-        }
-
-        response = requests.post(self.URL_TABLE, data=payload, headers=headers,
-                                 verify=True)
-
-        return response.text
+        return Utils.get_response(
+            method="get",
+            url=self.URL_TABLE,
+            data={
+                "PROPERTY_1647": "Прием на обучение на бакалавриат/специалитет",
+                "PROPERTY_1677": "Бюджетная основа",
+                "PROPERTY_1648": "Очная",
+                "PROPERTY_1652": "Владивосток",
+                "PROPERTY_1642": self.default_settings_content["list_of_departments"][0]
+            }).text
 
     def get_list_of_all_departments(self):
         page = html.fromstring(self.__get_html_with_departments_list())

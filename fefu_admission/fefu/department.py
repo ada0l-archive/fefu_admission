@@ -1,13 +1,13 @@
 import logging
 import time
 
-import requests
 from lxml import html
 
 from fefu_admission.university.department import Department
 from fefu_admission.university.enrollee import Enrollee
 from fefu_admission.university.type_of_completion import TypeOfCompletion
 from fefu_admission.university.university import University
+from fefu_admission.utils import Utils
 
 
 class FefuDepartment(Department):
@@ -21,31 +21,16 @@ class FefuDepartment(Department):
         super().__init__(n, u)
 
     def get_html_table(self):
-        headers = {
-            "accept": "text/html,application/xhtml+xml,application/xml",
-            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
-            (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"
-        }
-
-        logging.info("Try to send GET request " + self.name)
-        response = requests.get(self.URL_TABLE, headers=headers, verify=True)
-        logging.info("Status code: " + str(response.status_code))
-
-        headers["cookie"] = '; '.join([x.name + '=' + x.value for x in response.cookies])
-        headers["content-type"] = 'application/x-www-form-urlencoded'
-        payload = {
-            "PROPERTY_1647": "Прием на обучение на бакалавриат/специалитет",
-            "PROPERTY_1677": "Бюджетная основа",
-            "PROPERTY_1648": "Очная",
-            "PROPERTY_1652": "Владивосток",
-            "PROPERTY_1642": self.name
-        }
-
-        logging.info("Try to send POST request " + self.name)
-        response = requests.post(self.URL_TABLE, data=payload, headers=headers,
-                                 verify=True)
-        logging.info("Status code: " + str(response.status_code))
-        return response.text
+        return Utils.get_response(
+            method="post",
+            url=self.URL_TABLE,
+            data={
+                "PROPERTY_1647": "Прием на обучение на бакалавриат/специалитет",
+                "PROPERTY_1677": "Бюджетная основа",
+                "PROPERTY_1648": "Очная",
+                "PROPERTY_1652": "Владивосток",
+                "PROPERTY_1642": self.name
+            }).text
 
     def load_from_web(self):
         load_flag = False
