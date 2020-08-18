@@ -6,6 +6,8 @@ import click
 from fefu_admission.fefu.university import FefuUniversity
 from fefu_admission.university.university.printer import \
     UniversityInformationPrinter
+from fefu_admission.university.applicants_holder.printer import \
+    ApplicantsHolderInformationPrinter
 
 fefu = FefuUniversity()
 
@@ -36,6 +38,8 @@ def show_stats(date):
         fefu.serialization.load_from_file_all()
     fefu.processing_all_departments()
     UniversityInformationPrinter(fefu).print_info()
+    for dep in fefu.departments:
+        ApplicantsHolderInformationPrinter(dep).print_info()
 
 
 @cli.command("list", help="Show list of any department")
