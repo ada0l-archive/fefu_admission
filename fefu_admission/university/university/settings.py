@@ -2,6 +2,7 @@ import json
 import os
 
 from fefu_admission.university.enrollee import Enrollee
+from fefu_admission.prompt import Prompt
 
 
 class Settings:
@@ -55,15 +56,15 @@ class Settings:
         selected_departments_str = []
         print("Do you want to add this direction?")
         for department_str in self.get_list_of_all_departments():
-            answer = input("{}: [y/n]".format(department_str))
-            if answer == "y":
+            answer = Prompt.get_confirm(department_str)
+            if answer == Prompt.YES:
                 selected_departments_str.append(department_str)
             else:
                 pass
         me = None
-        if input("do you want to know your place on the list? [y/n]") == "y":
-            name = input("Enter name: ")
-            points = [int(x) for x in input("Enter your points: ").split(" ")]
+        if Prompt.get_confirm("do you want to know your place on the list?") == Prompt.YES:
+            name = Prompt.get_str("Enter name")
+            points = [int(x) for x in Prompt.get_str("Enter your points").split(" ")]
             me = Enrollee(name, points, True)
         settings = {
             "list_of_departments": selected_departments_str
