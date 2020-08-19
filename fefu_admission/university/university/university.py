@@ -3,6 +3,7 @@ import logging
 from fefu_admission.university.applicants_holder import ApplicantsHolderBase
 from fefu_admission.university.department import DepartmentWebLoaderThread
 from fefu_admission.university.type_of_completion import TypeOfCompletion
+from fefu_admission.university.department.department import Department
 
 from .serialization import UniversitySerialization
 
@@ -14,7 +15,11 @@ class University(ApplicantsHolderBase):
         self.name = ""
         self.departments = []
         self.serialization = UniversitySerialization(self)
-        self.settings = settings
+        if settings is not None:
+            self.set_settings(settings)
+        else:
+            self.settings = None
+        self.departmentClass = Department
 
     def load_from_web_all(self):
         thread_list = []
@@ -27,6 +32,11 @@ class University(ApplicantsHolderBase):
         for thread in thread_list:
             thread.join()
         logging.info("Done")
+
+    def set_settings(self, settingsClass):
+        self.settings = settingsClass(self)
+        for department in self.settings.list_of_departments:
+            self.departments.append(self.departmentClass(department, self))
 
     def processing_all_departments(self):
         for type_of_completion in TypeOfCompletion:

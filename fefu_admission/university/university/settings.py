@@ -9,33 +9,36 @@ class Settings:
 
     def __init__(self, university, data_path="", default_settings_content=None):
         self.data_path = data_path
+        self.university = university
         if default_settings_content is not None:
             self.default_settings_content = default_settings_content
         else:
-            self.default_settings_content = {
-                "me": None,
-                "list_of_departments": []
-            }
-        self.university = university
+            self.default_settings_content = {"me": None, "list_of_departments": []}
         self.settings_file = os.path.join(self.data_path, "settings.json")
 
-        data = self.get()
+        # create default settings if file not exists
+        if not os.path.isfile(self.settings_file):
+            self.create_default_settings()
+
+        data = None
+        try:
+            data = self.get()
+        except json.decoder.JSONDecodeError:
+            print("File is not corrected: {}".format(self.settings_file))
+            exit(1)
+
         if data is not None:
             self.me: Enrollee = Enrollee.get_from_json(data.get("me", None))
-            self.list_of_departments = data["list_of_departments"]
+            self.list_of_departments = data.get("list_of_departments", [])
         else:
             self.me = None
             self.list_of_departments = []
 
     def get(self):
-        try:
-            read_file = open(self.settings_file, "r")
-            data = json.load(read_file)
-            read_file.close()
-            return data
-        except FileNotFoundError:
-            self.create_default_settings()
-            self.get()
+        read_file = open(self.settings_file, "r")
+        data = json.load(read_file)
+        read_file.close()
+        return data
 
     def get_data_path(self):
         return self.data_path
