@@ -11,7 +11,7 @@ class SettingsSerialization:
         self.settings = settings
         self.data_path = data_path
 
-    def load_from_file(self):
+    def load(self):
         if not os.path.isfile(self.get_path_to_settings_file()):
             if Prompt.get_confirm("Settings file not founded. Do you want generate settings file?"):
                 self.generate_and_save_settings()

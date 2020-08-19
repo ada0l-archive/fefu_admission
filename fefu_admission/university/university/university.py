@@ -35,7 +35,7 @@ class University(ApplicantsHolderBase):
 
     def set_settings(self, settingsClass=None):
         self.settings = settingsClass(self)
-        self.settings.serialization.load_from_file()
+        self.settings.serialization.load()
         for department in self.settings.list_of_departments:
             self.departments.append(self.departmentClass(department, self))
 
