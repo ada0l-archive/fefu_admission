@@ -31,6 +31,20 @@ def generate_settings():
     fefu.settings.generate_and_save_settings()
 
 
+@cli.command("search_matches", help="Shows matches in a row")
+@click.option('--date', default=None, required=False)
+def search_matches(date):
+    global fefu
+    if date is not None:
+        date_list = [int(item) for item in date.split('.')]
+        d = datetime.today().replace(year=date_list[0], month=date_list[1], day=date_list[2])
+        fefu.serialization.load_from_file_all(d)
+    else:
+        fefu.serialization.load_from_file_all()
+    fefu.processing_all_departments()
+    UniversityInformationPrinter(fefu).search_for_matches()
+
+
 @cli.command("stats", help="Get statistics of the competitive situation")
 @click.option('--date', default=None, required=False)
 def show_stats(date):

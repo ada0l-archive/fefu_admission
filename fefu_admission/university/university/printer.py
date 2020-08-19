@@ -57,3 +57,25 @@ class UniversityInformationPrinter(ApplicantsHolderInformationPrinter):
         dep = self.applicants_holder.departments[index]
         ApplicantsHolderInformationPrinter(dep).print_info()
         print(tabulate(self.get_list_of_department(index, with_agreement), tablefmt='fancy_grid'))
+
+    def search_for_matches(self):
+        total = 0
+        for dep in self.applicants_holder.departments:
+            for type_of_completion in TypeOfCompletion:
+                count = 1
+                points = []
+                departments_list = dep.applicants[type_of_completion]
+                for enrollee_index, enrollee in enumerate(departments_list):
+                    if points == enrollee.points:
+                        count += 1
+                    else:
+                        if count >= 3:
+                            print("{}, {}".format(dep.name, type_of_completion.value))
+                            for i in range(enrollee_index - count, enrollee_index):
+                                enr = departments_list[i]
+                                print(i + 1 - (enrollee_index - count), enr.name, enr.points)
+                            print("\n")
+                            total += 1
+                        count = 1
+                        points = enrollee.points
+        print("Number of matches in a row: {}".format(total))
