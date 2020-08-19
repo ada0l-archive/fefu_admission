@@ -1,6 +1,7 @@
 import logging
 import time
 import requests
+from datetime import datetime
 
 
 class Utils:
@@ -16,6 +17,14 @@ class Utils:
             return res
 
         return wrapped
+
+    @staticmethod
+    def get_date(date):
+        d = None
+        if date is not None:
+            date_list = [int(item) for item in date.split('.')]
+            d = datetime.today().replace(year=date_list[0], month=date_list[1], day=date_list[2])
+        return d
 
     @staticmethod
     def get_response(method="get", url="", data=None):

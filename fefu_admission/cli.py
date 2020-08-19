@@ -1,13 +1,11 @@
 import logging
-from datetime import datetime
 
 import click
 
 from fefu_admission.fefu import FefuUniversity, FefuSettings
-from fefu_admission.university.university.printer import \
-    UniversityInformationPrinter
-from fefu_admission.university.applicants_holder.printer import \
-    ApplicantsHolderInformationPrinter
+from fefu_admission.university.university.printer import UniversityInformationPrinter
+from fefu_admission.university.applicants_holder.printer import ApplicantsHolderInformationPrinter
+from fefu_admission.utils import Utils
 
 fefu = FefuUniversity(settings=FefuSettings)
 
@@ -60,12 +58,7 @@ def load():
 @click.option('--date', default=None, required=False)
 def search_matches(date):
     global fefu
-    if date is not None:
-        date_list = [int(item) for item in date.split('.')]
-        d = datetime.today().replace(year=date_list[0], month=date_list[1], day=date_list[2])
-        fefu.serialization.load_from_file_all(d)
-    else:
-        fefu.serialization.load_from_file_all()
+    fefu.serialization.load_from_file_all(Utils.get_date(date))
     fefu.processing_all_departments()
     UniversityInformationPrinter(fefu).search_for_matches()
 
@@ -74,12 +67,7 @@ def search_matches(date):
 @click.option('--date', default=None, required=False)
 def show_stats(date):
     global fefu
-    if date is not None:
-        date_list = [int(item) for item in date.split('.')]
-        d = datetime.today().replace(year=date_list[0], month=date_list[1], day=date_list[2])
-        fefu.serialization.load_from_file_all(d)
-    else:
-        fefu.serialization.load_from_file_all()
+    fefu.serialization.load_from_file_all(Utils.get_date(date))
     fefu.processing_all_departments()
     UniversityInformationPrinter(fefu).print_info()
     for dep in fefu.departments:
@@ -93,12 +81,7 @@ def show_stats(date):
 @click.option('--date', default=None, required=False)
 def show_list(department, agreement, date):
     global fefu
-    if date is not None:
-        date_list = [int(item) for item in date.split('.')]
-        d = datetime.today().replace(year=date_list[0], month=date_list[1], day=date_list[2])
-        fefu.serialization.load_from_file_all(d)
-    else:
-        fefu.serialization.load_from_file_all()
+    fefu.serialization.load_from_file_all(Utils.get_date(date))
     UniversityInformationPrinter(fefu).print_list_of_department(department, agreement)
 
 
