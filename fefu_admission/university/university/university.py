@@ -10,16 +10,16 @@ from .serialization import UniversitySerialization
 
 class University(ApplicantsHolderBase):
 
-    def __init__(self, settings=None):
+    def __init__(self, name="", departmentClass=Department, settings=None):
         super().__init__()
-        self.name = ""
+        self.name = name
         self.departments = []
         self.serialization = UniversitySerialization(self)
+        self.departmentClass = departmentClass
         if settings is not None:
             self.set_settings(settings)
         else:
             self.settings = None
-        self.departmentClass = Department
 
     def load_from_web_all(self):
         thread_list = []
@@ -33,7 +33,7 @@ class University(ApplicantsHolderBase):
             thread.join()
         logging.info("Done")
 
-    def set_settings(self, settingsClass):
+    def set_settings(self, settingsClass=None):
         self.settings = settingsClass(self)
         for department in self.settings.list_of_departments:
             self.departments.append(self.departmentClass(department, self))
