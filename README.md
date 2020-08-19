@@ -33,9 +33,10 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  list   Show list of any department
-  load   Load data from website and save to ~/.fefu_admission/data/
-  stats  Get statistics of the competitive situation
+  list            Show list of any department
+  load            Load data from website and save to ~/.fefu_admission/data/
+  search_matches  Shows matches in a row
+  stats           Get statistics of the competitive situation
 
 ```
 
