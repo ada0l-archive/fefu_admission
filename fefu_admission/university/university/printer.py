@@ -11,17 +11,17 @@ class UniversityInformationPrinter(ApplicantsHolderInformationPrinter):
     def __init__(self, applicants_holder):
         super().__init__(applicants_holder)
 
-    def get_list_of_department(self, index, with_agreement=False):
+    def get_list_of_department(self, department, with_agreement=False):
         rows_list = []
-        dep = self.applicants_holder.departments[index]
+        index = self.applicants_holder.departments.index(department)
         for type_of_completion in [TypeOfCompletion.SpecialQuota,
                                    TypeOfCompletion.TargetQuota,
                                    TypeOfCompletion.Budget]:
             rows_list.append([type_of_completion.value])
             if with_agreement:
-                list_applicants = dep.applicants_with_agreement[type_of_completion]
+                list_applicants = department.applicants_with_agreement[type_of_completion]
             else:
-                list_applicants = dep.applicants[type_of_completion]
+                list_applicants = department.applicants[type_of_completion]
 
             for index_of_enrollee, enrollee in enumerate(list_applicants):
                 me = self.applicants_holder.settings.me
@@ -53,10 +53,9 @@ class UniversityInformationPrinter(ApplicantsHolderInformationPrinter):
 
         return rows_list
 
-    def print_list_of_department(self, index, with_agreement=False):
-        dep = self.applicants_holder.departments[index]
-        ApplicantsHolderInformationPrinter(dep).print_info()
-        print(tabulate(self.get_list_of_department(index, with_agreement), tablefmt='fancy_grid'))
+    def print_list_of_department(self, department, with_agreement=False):
+        ApplicantsHolderInformationPrinter(department).print_info()
+        print(tabulate(self.get_list_of_department(department, with_agreement), tablefmt='fancy_grid'))
 
     def search_for_matches(self):
         total = 0
